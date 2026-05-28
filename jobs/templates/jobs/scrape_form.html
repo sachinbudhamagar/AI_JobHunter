@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scrape LinkedIn Jobs</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input { padding: 8px; margin: 5px 0; width: 300px; }
+        button { background: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+        a { color: #4CAF50; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <h1>Scrape LinkedIn Jobs</h1>
+    <a href="{% url 'job_list' %}">← Back to Jobs</a>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div style="background: #f44336; color: white; padding: 10px; margin: 10px 0;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <form method="POST" style="margin-top: 20px;">
+        {% csrf_token %}
+        <div>
+            <label>Job Title:</label><br>
+            <input type="text" name="job_title" required placeholder="e.g., Data Scientist, Software Engineer">
+        </div>
+        <div style="margin-top: 10px;">
+            <label>Location:</label><br>
+            <input type="text" name="location" placeholder="e.g., Nepal, Remote, Kathmandu">
+        </div>
+        <div style="margin-top: 20px;">
+            <button type="submit">Start Scraping</button>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Listings</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .job { border: 1px solid #ddd; margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .job h3 { margin: 0 0 5px 0; color: #333; }
+        .company { color: #666; font-weight: bold; }
+        .location { color: #888; }
+        .description { margin-top: 10px; color: #555; }
+        .btn { background: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; }
+        .btn:hover { background: #45a049; }
+        .message { background: #4CAF50; color: white; padding: 10px; margin: 10px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Job Listings</h1>
+    <a href="{% url 'scrape' %}" class="btn">Scrape New Jobs</a>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    {% if jobs %}
+        <p>Total jobs: {{ jobs|length }}</p>
+        {% for job in jobs %}
+            <div class="job">
+                <h3>{{ job.title }}</h3>
+                <p class="company">{{ job.company }}</p>
+                <p class="location">{{ job.location }}</p>
+                <p class="description">{{ job.description|truncatewords:50 }}</p>
+                <small>Scraped: {{ job.scraped_at|date:"Y-m-d H:i" }}</small>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No jobs found. Click "Scrape New Jobs" to get started!</p>
+    {% endif %}
+</body>
+</html>
